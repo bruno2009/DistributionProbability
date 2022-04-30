@@ -322,6 +322,116 @@ $$ f(x) = \P(X = x) = \binom{x + r - 1}{x} \bigg(\frac{\mu}{r + \mu}\bigg)^{x} \
 </div>
         
 where the support is $X \in \{0, 1, 2, \dots\}$ and parametric space is $r > 0$ and $\mu > 0$. The expected value is $\E(X) = \mu$ and the variance is $\var(X) = \mu + \frac{\mu^2}{r}$. So the parameter $r$ controls the overdispersion with a scalar of the squared mean. 
+
+
+# Normal distribution
+      
+The Normal Distribution is one of the most important in statistics. The name of the Norma Distribution is quite intuitive because everything in this world tends to be normal. For example, imagine the height of people; usually, there are so tall people and, at the same time, exist short people, but the majority stay on average. And it is so fascinating. In my opinion, the world always converges to normality. Let $X$ a continuous random variable with probability density function (PDF) $f_{x}$ . Then, $X \sim N(\mu, \sigma^{2})$ has PDF
+      
+<div class="equation">
+$$ f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{\sigma^{2}}(x - \mu)^{2}} $$
+</div>
+        
+where the support is $X \in  \mathbb{R}$ and parametric space is $\mu \in \mathbb{R}$ - location parameter, and $\sigma \in \mathbb{R}^{+}$ - scale parameter. The expected value is $\E(X) = \mu$ and the variance is $\var(X) = \sigma^{2}$.
+      
+Some properties you must have in mind are
+      
+<div class="lista">
+  <ol type="1">
+    <li> The curve of Normal Distribution is unimodal around its $\mu$. </li>
+    <li> $x = \mu$ is the maximum point to $f(x)$. </li>
+    <li> Beyond $\mu$ to be the mean, it is at the same time median and mode. </li>
+    <li> $\mu - \sigma$ and $\mu + \sigma$ are inflection points of $f(x)$. </li>
+    <li> The density of Normal Distribution is log-concave. </li>
+  </ol> 
+</div>
+        
+Below, you can see the R code to the density plot from Normal Distribution with different values.
+      
+<span style="width:40px;display:inline-block"></span>
+        
+```{r warning=FALSE, message=FALSE, fig.align="center", fig.height=4, class.source="watch-out"}
+      
+      par(mfrow = c(2, 2))
+      
+      n <- 1000
+      mean0 <- c(-10, 5,-10, 5)
+      sd0 <- c(2,2,5,5)
+      
+      for (i in seq(1, length(mean0)) ) {
+        
+        set.seed(123)
+        mu <- mean0[i]
+        sigma <- sd0[i]
+        x <- sort(rnorm(n = n, mean = mu, sd = sigma))
+        dens <- dnorm(x = x, mean = mu, sd = sigma)
+        name <- paste0('X ~ N(',mu,', ',sigma,')') 
+        
+        inpointsN <- mu - sigma
+        inpointsP <- mu + sigma
+        
+        plot(x, dens,
+             type='l',
+             main=name,
+             ylab='Density',
+             xlab ='X',
+             ylim = c(0,0.2),
+             lwd=3)
+        
+        abline(v=c(inpointsN, inpointsP), col = 'red', lty = 2)
+        abline(v=mu, col = 'blue', lty = 2)
+      }
+```
+<span style="width:40px;display:inline-block"></span>
+        
+The most important and well-known model that comes from Normal Distribution is Linear Regression. 
+      
+# Gamma distribution
+      
+The Gamma Distribution is suitable when its variable is continuous, non-negative, and positive-skewed data and is used to model waiting times, such as insurance claims, survival data, or econometrics data. Let $X$ a continuous random variable with probability density function (PDF) $f_{x}$. Then, $X \sim Gamma(r, \beta)$ has PDF  
+      
+<div class="equation">
+$$f(x) = \frac{\beta^{r}}{\Gamma(r)}x^{r-1}e^{-\beta x}$$
+</div>
+        
+where the support is $X \in \mathbb{R}_{\small\setminus\{0\}}^{+}$ and parametric space is $(r, \beta) \in \mathbb{R}_{\small\setminus\{0\}}^{+}$. The expected value is $\E(X) = \frac{r}{\beta}$ and variance is $\var(X) = \frac{r}{\beta^2}.$
+        
+I want to come back approach related to the re-parameterization as it was done to the Negative-Binomial distribution in terms of its mean. I am going to broach this topic by virtue of its importance to statistical models. Then,  
+      
+<div class="equation">
+$$\begin{aligned}
+\E(X) &= \frac{r}{\beta} = \mu \\[10pt]
+\beta &=  \frac{r}{\mu} \\[10pt]
+\end{aligned}$$
+</div>
+        
+And the variance is
+      
+<div class="equation">
+$$\begin{aligned}
+\var(X) &= \frac{r}{\beta^2} = \frac{r}{{\big(\frac{r}{\mu}\big)}^2} \\[10pt]
+&= \frac{\mu^{2}}{r} \\[10pt]
+\end{aligned}$$
+</div>
+        
+The new form of Gamma distribution can be presented as:
+        
+<div class="equation">
+$$ f(x) = \frac{{\big(\frac{r}{\mu}\big)}^{r}}{\Gamma(r)}x^{r-1}e^{-\frac{r}{\mu} x} $$
+</div>
+        
+where the support is $X \in \mathbb{R}_{\small\setminus\{0\}}^{+}$ and parametric space is $(r, \mu) \in \mathbb{R}_{\small\setminus\{0\}}^{+}$. The expected value is $\E(X) = \mu$ and variance is $\var(X) = \frac{\mu^{2}}{r}.$
+        
+An important point to highlight is that the coefficient of variation in gamma distribution is given as
+      
+<div class="equation">
+$$ \begin{aligned}
+\text{CV} = \frac{\sqrt{\var(X)}}{\E(X)} = \frac{\sqrt{\frac{\mu^{2}}{r}}}{\mu} = \frac{1}{\sqrt{r}} = \phi^{2}\\[10pt]
+\end{aligned}$$
+</div>
+        
+Where coefficient of variation (CV) is a constant and $\phi = \frac{1}{r}$ is the dispersion parameter. This means that as the expected value increase, so the variance of random variable increases in proportion to $\frac{\var(X)}{\E(X)} = \frac{\mu}{r}$.
+      
       
  
       
