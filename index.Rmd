@@ -28,8 +28,9 @@ nocite: '@*'
 ```{r setup, include=FALSE, echo = FALSE}
 
 library(downlit)
+#library(formatR)
 
-knitr::opts_chunk$set(tidy.opts=list( width.cutoff = 30 ), tidy=TRUE)
+knitr::opts_chunk$set(tidy.opts=list( width.cutoff = 30 ), tidy=T)
 
 ##       highlight: breezedark
 ##       highlight_downlit: TRUE
@@ -58,7 +59,10 @@ where the support is $X \in \{0, 1\}$ and parametric space is $p \in (0, 1)$. Th
 I will not discuss moments in statistics here where the first moment is mathematical expectations and the second is related to variance. Nevertheless, [Wikipedia](https://en.wikipedia.org/wiki/Moment_(mathematics)) is a good site where you might start to study more about this topic. I love this concept because everything concerning statistical models is linked to a mean, mainly in generalized linear models ([MLG](https://en.wikipedia.org/wiki/Generalized_linear_model)). But it is a topic to see forward. 
 
 Bellow, there is a code about fifteen realizations from Bernoulli distribution. You can see that there is a chart, where the x-axis is $X = 1$ and $X = 0$, and  y-axis is $\P(X = 1)$ and $\P(X = 0)$, respectively. And other propriety that we need to have in mind is $\P(X = 1) + \P(X = 0) = 1$.
+
 <span style="width:40px;display:inline-block"></span>
+
+ <!--  
 ```{r warning=FALSE, message=FALSE, fig.align="center", fig.height=4, class.source="watch-out"}
       set.seed(123)
       value <- seq(0.000001, 0.999999, by = 0.001)
@@ -74,9 +78,9 @@ Bellow, there is a code about fifteen realizations from Bernoulli distribution. 
               ylab = "Probability",
               col=rainbow(15))
       
-```
+``` 
 <span style="width:40px;display:inline-block"></span>
- <!--    
+  
 The Bernoulli distribution has a huge spotlight in many areas, mainly because of its applications. For whatever response variable you have whose response is good/bad or two options, the model logistic regression will be the model appropriated to study. 
    
 # Binomial distribution 
@@ -95,7 +99,8 @@ For this last one, $n$, I would prefer to treat it as fix value than a parameter
 
 The graph below shows us how different $p$ could affect the density curve of Binomial distribution. 
 <span style="width:40px;display:inline-block"></span>
-        
+
+
 ```{r warning=FALSE, message=FALSE, fig.align="center", fig.height=4, class.source="watch-out"}
       
       par(mfrow = c(2, 2))
@@ -118,7 +123,7 @@ The graph below shows us how different $p$ could affect the density curve of Bin
              xlab ='Successes',
              lwd=3)
       }
-```
+``` 
 <span style="width:40px;display:inline-block"></span>
         
 The model that comes from this one is the [dose‐effect model](https://en.wikipedia.org/wiki/Dose%E2%80%93response_relationship) used in an experiment, and this idea comes from GLM as well. I will explain this model in the future-forward and link it here as it is ready.  -->
