@@ -74,6 +74,10 @@ barplot(data0,
   ylab = "Probability",
   col=rainbow(15))
 ```
+<span style="width:40px;display:inline-block"></span>
+        
+The Bernoulli distribution has a huge spotlight in many areas, mainly because of its applications. For whatever response variable you have whose response is good/bad or two options, the model logistic regression will be the model appropriated to study. 
+      
 
 # REFERENCES
 
