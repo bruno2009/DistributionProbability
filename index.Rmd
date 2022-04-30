@@ -79,10 +79,10 @@ Bellow, there is a code about fifteen realizations from Bernoulli distribution. 
 The Bernoulli distribution has a huge spotlight in many areas, mainly because of its applications. For whatever response variable you have whose response is good/bad or two options, the model logistic regression will be the model appropriated to study. 
       
 # Binomial distribution 
-
+<!--     
 The Binomial distribution is essential primarily due to its application in the experimental area of health, agronomy, or other sciences. Let $X$ a binary random variable with probability density function (PDF) $f_{x}$. Then, $X \sim Bin(n, p)$ has PDF
 
-<!--         
+    
 <div class="equation">
 $$f(x) = \P(X = x) = {{n}\choose{x}} p^{x} (1-p)^{n-x}$$
 </div>
