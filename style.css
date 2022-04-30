@@ -1,0 +1,84 @@
+/*Reset*/
+*, *:before, *:after{margin: 0; padding: 0;box-sizing:border-box; -webkit-box-sizing:border-box;}
+
+/*Inherit the coding of the page.*/
+body{font-family: "Trirong", serif;
+    font-size: inherit;}
+
+input, select, iframe, button{border: none; font-family: "Trirong", serif;}
+/* topo | direita | inferior | esquerda */
+h1, h2, h3{margin: 0px 0px 0px 0px; padding:0;}
+a{text-decoration: none; color: red;}
+
+a:hover{
+  text-decoration: none;
+  color: rgb(114, 38, 38);
+}
+
+/*Overall*/
+.section{
+margin-top: 2em;
+top: 50%;
+float: left;
+width: 100%;
+font-size: calc( 22px + ( 25 - 22 ) * (( 100vw - 320px ) / ( 1200 - 320 )));
+}
+
+.content{ /*Será a margem máxima do texto entre a esquerda e direita padrão*/
+  max-width: 960; 
+  width: 90%;
+  margin: 0 auto; /*auto to center to left and right*/
+  /*border-bottom: 4px solid pink; */
+  text-align: justify;
+  justify-content: center;
+ }
+
+h1 {
+  font-weight: bold;
+  margin-top: 30px !important;
+  margin-bottom: 20px !important;
+  font-size: calc( 26px + ( 35 - 26 ) * (( 100vw - 250px ) / ( 1200 - 250 )));
+  
+}
+
+
+/*It set up output in R*/
+pre {
+    border: 0px solid white;
+    color: black;
+    font-weight: 550;
+ }
+
+.watch-out {
+  margin-left: 100px;
+  margin-right: 10px;
+  background-image: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url(images/Rlogo.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center; /*centralize an image*/
+  background-attachment: local; /*fix a image*/ 
+  background-color: white;
+  border: 1px solid black;
+  font-size: calc( 8px + ( 14 - 8 ) * (( 100vw - 250px ) / ( 1200 - 250 )));
+  font-weight: 550;
+}
+
+.equation{
+  margin-top: 40px;
+  margin-bottom: 40px;
+  font-size: calc( 15px + ( 21 - 15 ) * (( 100vw - 250px ) / ( 1200 - 250 )));
+}
+
+#refs {
+  font-size: calc( 18px + ( 21 - 18 ) * (( 100vw - 320px ) / ( 1200 - 320 )));
+}
+
+.lista{
+  padding-left: 10%;
+}
+
+.lista ol li{
+  font-size: calc( 22px + ( 25 - 22 ) * (( 100vw - 320px ) / ( 1200 - 320 )));
+  font-weight: lighter;
+}
+
