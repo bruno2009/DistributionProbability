@@ -118,6 +118,16 @@ The graph below shows us how different $p$ could affect the density curve of Bin
 <span style="width:40px;display:inline-block"></span>
         
 The model that comes from this one is the [dose‐effect model](https://en.wikipedia.org/wiki/Dose%E2%80%93response_relationship) used in an experiment, and this idea comes from GLM as well. I will explain this model in the future-forward and link it here as it is ready. 
+
+# Poisson distribution
+      
+When you have to analyze data that the response variable is a positive discrete variable, the Poisson distribution is the best distribution to begin your study. Let $X$ a discrete random variable with probability density function (PDF) $f_{x}$ . Then, $X \sim Pois(\lambda)$ has PDF 
+      
+<div class="equation">
+ $$f(x) = \P(X = x) = \frac{\lambda^{x} e^{-\lambda}}{x!}$$
+</div>
+
+where the support is $X \in \{0, 1, 2, \dots\}$ – number of successes and parametric space is $\lambda \in (0, + \infty)$ rate. The expected value and variance is $\E(X) = \var(X) = \lambda$. Below is a code to generate data from Poisson distribution in the R program. 
       
     
 
