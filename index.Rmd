@@ -116,13 +116,10 @@ The graph below shows us how different $p$ could affect the density curve of Bin
              xlab ='Successes',
              lwd=3)
       }
-      ```
+```
 <span style="width:40px;display:inline-block"></span>
         
 The model that comes from this one is the [dose‐effect model](https://en.wikipedia.org/wiki/Dose%E2%80%93response_relationship) used in an experiment, and this idea comes from GLM as well. I will explain this model in the future-forward and link it here as it is ready. 
-      
-    
-     
 
 # REFERENCES
 
