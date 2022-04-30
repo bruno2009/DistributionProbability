@@ -6,13 +6,13 @@ output:
       highlight: arrow
       css: style.css
       toc: FALSE
-      math_method: 
-        engine: webtex
-        url: https://latex.codecogs.com/svg.image?
+      #math_method: 
+        #engine: webtex
+        #url: https://latex.codecogs.com/svg.image?
       citation_package: biblatex
-      includes: 
-         in_header: Capa.html
-         after_body: Footer.html
+      #includes: 
+         #in_header: Capa.html
+         #after_body: Footer.html
 header-includes:
   - \usepackage[fleqn]{amsmath}
 bibliography: yourBibFile.bib
@@ -413,32 +413,7 @@ $$\begin{aligned}
 &= \frac{\mu^{2}}{r} \\[10pt]
 \end{aligned}$$
 </div>
-        
-The new form of Gamma distribution can be presented as:
-        
-<div class="equation">
-$$ f(x) = \frac{{\big(\frac{r}{\mu}\big)}^{r}}{\Gamma(r)}x^{r-1}e^{-\frac{r}{\mu} x} $$
-</div>
-        
-where the support is $X \in \mathbb{R}_{\small\setminus\{0\}}^{+}$ and parametric space is $(r, \mu) \in \mathbb{R}_{\small\setminus\{0\}}^{+}$. The expected value is $\E(X) = \mu$ and variance is $\var(X) = \frac{\mu^{2}}{r}.$
-        
-An important point to highlight is that the coefficient of variation in gamma distribution is given as
-      
-<div class="equation">
-$$ \begin{aligned}
-\text{CV} = \frac{\sqrt{\var(X)}}{\E(X)} = \frac{\sqrt{\frac{\mu^{2}}{r}}}{\mu} = \frac{1}{\sqrt{r}} = \phi^{2}\\[10pt]
-\end{aligned}$$
-</div>
-        
-Where coefficient of variation (CV) is a constant and $\phi = \frac{1}{r}$ is the dispersion parameter. This means that as the expected value increase, so the variance of random variable increases in proportion to $\frac{\var(X)}{\E(X)} = \frac{\mu}{r}$.
-      
-      
  
-      
-    
-
-
-        
       
 
  
