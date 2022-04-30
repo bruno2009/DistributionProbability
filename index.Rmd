@@ -86,7 +86,7 @@ The Binomial distribution is essential primarily due to its application in the e
  $$f(x) = \P(X = x) = {{n}\choose{x}} p^{x} (1-p)^{n-x}$$
 </div>
 
-where the support is $X \in \{0, 1, \dots, n\}$ – number of successes and parametric space is $p \in (0, 1)$ success probability for each trial and $n \in \{0, 1, \dots\}$ - number of trials. The expected value is $\E(X) = np$ and variance is $\var(X) = np(1 - p)$.
+
       
 For this last one, $n$, I would prefer to treat it as fix value than a parameter.  It happens because you will have always been with this value previously. And the concept of the parameter is to estimate from the sample and not to have it before. It might have the same idea or be called a hyperparameter, such as machine learning techniques. 
 
