@@ -1,6 +1,5 @@
 ---
-title: "Probability"
-#"<center><div class='mytitle'>Probability</div></center>"
+title: "<center><div class='mytitle'>Probability</div></center>"
 output:
   html_document:
       highlight: arrow
