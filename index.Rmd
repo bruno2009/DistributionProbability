@@ -409,7 +409,7 @@ And the variance is
       
 <div class="equation">
 $$\begin{aligned}
-\var(X) &= \frac{r}{\beta^2} = \frac{r}{{\big(\frac{r}{\mu}\big)}^2} \\[10pt]
+\var(X) &= \frac{r}{\beta^2} = \frac{r}{\big(\frac{r}{\mu}\big)^2} \\[10pt]
 &= \frac{\mu^{2}}{r} \\[10pt]
 \end{aligned}$$
 </div>
