@@ -12,7 +12,7 @@ output:
       citation_package: biblatex
       includes: 
          in_header: Capa.html
-         #after_body: Footer.html
+         after_body: Footer.html
 header-includes:
   - \usepackage[fleqn]{amsmath}
 bibliography: yourBibFile.bib
