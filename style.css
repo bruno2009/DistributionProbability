@@ -30,7 +30,7 @@ font-size: calc( 22px + ( 25 - 22 ) * (( 100vw - 320px ) / ( 1200 - 320 )));
   margin: 0 auto; /*auto to center to left and right*/
   /*border-bottom: 4px solid pink; */
   text-align: justify;
-  text-justify: inter-character;
+  text-justify: inter-word;
   text-rendering: optimizeLegibility !important;
  }
 
