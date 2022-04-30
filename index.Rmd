@@ -59,7 +59,21 @@ Bellow, there is a code about fifteen realizations from Bernoulli distribution. 
 
 <span style="width:40px;display:inline-block"></span>
 
-Bruno
+```{r warning=FALSE, message=FALSE, fig.align="center", fig.height=4, class.source="watch-out"}
+set.seed(123)
+value <- seq(0.000001, 0.999999, by = 0.001)
+p <- sample(value, size = 15, replace = TRUE)
+q <- 1 - p
+    
+data0 <- cbind('X = 1' = p, 'X = 0' = q)
+      
+barplot(data0, 
+  beside = TRUE,
+  main = "Bernoulli distribution",
+  xlab = "Realization of the variable",
+  ylab = "Probability",
+  col=rainbow(15))
+```
 
 # REFERENCES
 
