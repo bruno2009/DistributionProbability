@@ -10,8 +10,8 @@ output:
         #engine: webtex
         #url: https://latex.codecogs.com/svg.image?
       citation_package: biblatex
-      #includes: 
-         #in_header: Capa.html
+      includes: 
+         in_header: Capa.html
          #after_body: Footer.html
 header-includes:
   - \usepackage[fleqn]{amsmath}
