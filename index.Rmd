@@ -6,9 +6,9 @@ output:
       highlight: arrow
       css: style.css
       toc: FALSE
-      #math_method: 
-        #engine: webtex
-        #url: https://latex.codecogs.com/svg.image?
+      math_method: 
+        engine: webtex
+        url: https://latex.codecogs.com/svg.image?
       citation_package: biblatex
       includes: 
          in_header: Capa.html
@@ -44,6 +44,11 @@ knitr::opts_chunk$set(tidy.opts=list( width.cutoff = 30 ), tidy=TRUE)
   <div class="content">
 
 Here, I want to discuss the main probability distribution (based on my humble knowledge). Probability is the area that I am so fascinated with because there are many applications in several science topics. The principal probability distributions necessary to understand the whole process regarding inference and applying statistical models are Bernoulli, Binomial, Negative-Binomial, Poisson, Normal, and Gamma. Of course, there are many other essential distributions that I am not to discourse here. I will try to explain the support and parameters beyond the idea behind each one.  
+
+# Bernoulli distribution
+
+The first one is the most famous distribution, is the Bernoulli distribution. Let $X$ a binary random variable with probability density function (PDF) $f_{x}$ . Then, $X \sim Ber(p)$ has PDF
+
 
 # REFERENCES
 
