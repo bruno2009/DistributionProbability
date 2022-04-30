@@ -128,6 +128,135 @@ When you have to analyze data that the response variable is a positive discrete 
 </div>
 
 where the support is $X \in \{0, 1, 2, \dots\}$ – number of successes and parametric space is $\lambda \in (0, + \infty)$ rate. The expected value and variance is $\E(X) = \var(X) = \lambda$. Below is a code to generate data from Poisson distribution in the R program. 
+
+<!-- Test -->
+
+ <span style="width:40px;display:inline-block"></span>
+        
+```{r warning=FALSE, message=FALSE, fig.align="center", fig.height=4, class.source="watch-out"}
+      
+      ## Package
+      library(vcd)
+      
+      ## Poisson 
+      set.seed(123)
+      n <- 500
+      lambda = 4
+      x <- rpois(n=n, lambda = lambda)
+      
+      var(x)/mean(x)
+      
+      ## Histogram to discrete data
+      result.prop <- prop.table( table(x))
+      round(result.prop, 6)*100
+      
+      max.ta <- max(table(x)) + 5
+      
+      bar <- barplot(table(x), xaxt = "n", ylim = c(0, max.ta), xlab = "x", ylab = "Frequency")
+      axis(1, at = bar, labels = data.frame(table(x))$x, las = 3)
+      
+      ## You might use 'type = standing'
+      gf <- goodfit(x, "poisson", method = "ML")
+      plot(gf, type = "hanging", scale = "sqrt", xlab = "Number of Occurrences", 
+           ylab = expression(sqrt("Frequency")))
+      
+```
+<span style="width:40px;display:inline-block"></span>
+        
+As you see, the mean and variance have the same parameter, and this property is so crucial in many applications in the real world. When $\var(X) < \E(X)$ is called **underdispersion**, it is not common in Poisson models; however, there are some techniques to deal with it. Otherwise, when $\var(X) > \E(X)$ is called **overdispersion**, it is more common in Poisson models. Usually, the problem arises because there is an excess of zero. Exist many approaches to solve it, such as Negative-Binomial regression (more usual), Zero-Inflated Poisson Regression, and others.  
+      
+Now, I will assume that $\lambda \sim Gamma(\alpha, \beta)$. For the moment, I will say that the support of the Gamma distribution and the parametric space of the Poisson is the same. When I explain the Negativa-Binomial Distribution, this will be clearer to you. 
+      
+<span style="width:40px;display:inline-block"></span>
+        
+```{r warning=FALSE, message=FALSE, fig.align="center", fig.height=4, class.source="watch-out"}
+      
+      set.seed(123)
+      n <- 500
+      k <- 10
+      theta <- 0.409
+      lambda = rgamma(n, shape = k, scale = theta)
+      
+      ## it is so similar lambda = 4
+      mean(lambda)
+      
+      x <- rpois(n=n, lambda = lambda)
+      
+      ## overdispersion
+      var(x)/mean(x)
+      
+      ## Histogram to discret data
+      result.prop <- prop.table( table(x))
+      round(result.prop, 6)*100
+      
+      max.ta <- max(table(x)) + 5
+      
+      bar <- barplot(table(x), xaxt = "n", ylim = c(0, max.ta), xlab = "x", ylab = "Frequency")
+      axis(1, at = bar, labels = data.frame(table(x))$x, las = 3)
+      
+      ## Poisson
+      ## In case use 'type = standing'
+      gf <- goodfit(x, "poisson", method = "ML")
+      plot(gf, type = "hanging", scale = "sqrt", xlab = "Number of Occurrences", 
+           ylab = expression(sqrt("Frequency")))
+      
+      ## Negativa-Binomial 
+      gf <- goodfit(x, "nbinomial", method = "ML")
+      plot(gf, type = "hanging", scale = "sqrt", xlab = "Number of Occurrences", 
+           ylab = expression(sqrt("Frequency")))
+      
+```
+<span style="width:40px;display:inline-block"></span>
+        
+***What do you think about these results?*** So, it is similar to the results generated from the Poisson distribution with $\lambda = 4$. We should conclude that the Poisson distribution remains a good option instead of the Negative-Binomial distribution. 
+      
+The $\lambda$ was generated to create an overdispersion in the code below. 
+      
+<span style="width:40px;display:inline-block"></span>
+        
+```{r warning=FALSE, message=FALSE, fig.align="center", fig.height=4, class.source="watch-out"}
+      
+      set.seed(123)
+      n <- 500
+      k <- 1.07
+      theta <- 4
+      lambda = rgamma(n, shape = k, scale = theta)
+      
+      ## it is so similar lambda = 4
+      mean(lambda)
+      
+      x <- rpois(n=n, lambda = lambda)
+      
+      ## overdispersion
+      var(x)/mean(x)
+      
+      ## Histogram to discret data
+      result.prop <- prop.table( table(x))
+      round(result.prop, 6)*100
+      
+      max.ta <- max(table(x)) + 5
+      
+      bar <- barplot(table(x), xaxt = "n", ylim = c(0, max.ta), xlab = "x", ylab = "Frequency")
+      axis(1, at = bar, labels = data.frame(table(x))$x, las = 3)
+      
+      ## In case use 'type = standing'
+      ## Poisson
+      gf <- goodfit(x, "poisson", method = "ML")
+      plot(gf, type = "hanging", scale = "sqrt", xlab = "Number of Occurrences", 
+           ylab = expression(sqrt("Frequency")))
+      
+      ## Negativa-Binomial 
+      gf <- goodfit(x, "nbinomial", method = "ML")
+      plot(gf, type = "hanging", scale = "sqrt", xlab = "Number of Occurrences", 
+           ylab = expression(sqrt("Frequency")))
+      
+```
+<span style="width:40px;display:inline-block"></span>
+        
+What must be seen regarding the overdispersion is that numbers of zero are responsible for this problem; thus, this one is equivalent to **17.4%** of our database and is the number that repeats the most. 
+      
+Another important property is the occurrence of the number of events in a specific interval of time, distance, area or volume, and it has a significant impact on studies. I am going to give two examples instead of a mathematical concept. The first one is you want to know if a particular highway improved in the accident numbers, in other words, if there has been a decrease in the number of accidents. Accident numbers are available at eight points on the highway before and after the improvements, during the number of years specified in each case. In this case, the number of years fixed is different for each sample observation, so you need to deal with an **offset**. The second example is you want to study the number of dengue cases in each city in a specific state, but you can not compare equal to equal because the population density is not the same. So, in this case, you have an **offset** again. 
+ 
       
     
 
