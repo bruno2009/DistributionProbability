@@ -1,0 +1,64 @@
+---
+title: "Probability"
+#"<center><div class='mytitle'>Probability</div></center>"
+output:
+  html_document:
+      highlight: arrow
+      css: style.css
+      toc: FALSE
+      math_method: 
+        engine: webtex
+        url: https://latex.codecogs.com/svg.image?
+      citation_package: biblatex
+      includes: 
+         in_header: Capa.html
+         after_body: Footer.html
+header-includes:
+  - \usepackage[fleqn]{amsmath}
+bibliography: yourBibFile.bib
+link-citations: true
+biblio-style: authoryear
+---
+
+
+---
+nocite: '@*'
+---
+
+
+
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\P}{\mathrm{P}}
+
+<section class="section" >
+  <div class="content">
+
+Here, I want to discuss the main probability distribution (based on my humble knowledge). Probability is the area that I am so fascinated with because there are many applications in several science topics. The principal probability distributions necessary to understand the whole process regarding inference and applying statistical models are Bernoulli, Binomial, Negative-Binomial, Poisson, Normal, and Gamma. Of course, there are many other essential distributions that I am not to discourse here. I will try to explain the support and parameters beyond the idea behind each one.  
+
+# Bernoulli distribution
+
+The first one is the most famous distribution, is the Bernoulli distribution. Let $X$ a binary random variable with probability density function (PDF) $f_{x}$ . Then, $X \sim Ber(p)$ has PDF
+
+<div class="equation">
+  $$f(x) = \P(X = x) = p^{x} (1-p)^{1-x}$$
+</div>
+    
+where the support is $X \in \{0, 1\}$ and parametric space is $p \in (0, 1)$. The expected value (mathematical expectation) is $\E(X) = p$ and variance is $\var(X) = p(1 - p)$.
+
+I will not discuss moments in statistics here where the first moment is mathematical expectations and the second is related to variance. Nevertheless, [Wikipedia](https://en.wikipedia.org/wiki/Moment_(mathematics)) is a good site where you might start to study more about this topic. I love this concept because everything concerning statistical models is linked to a mean, mainly in generalized linear models ([MLG](https://en.wikipedia.org/wiki/Generalized_linear_model)). But it is a topic to see forward. 
+
+Bellow, there is a code about fifteen realizations from Bernoulli distribution. You can see that there is a chart, where the x-axis is $X = 1$ and $X = 0$, and  y-axis is $\P(X = 1)$ and $\P(X = 0)$, respectively. And other propriety that we need to have in mind is $\P(X = 1) + \P(X = 0) = 1$.
+
+
+# REFERENCES
+
+<div id="refs"></div>
+
+</div>
+</section>
+
+
+
+
+
