@@ -92,32 +92,7 @@ For this last one, $n$, I would prefer to treat it as fix value than a parameter
   
 The graph below shows us how different $p$ could affect the density curve of Binomial distribution.
 <span style="width:40px;display:inline-block"></span>
-        
-```{r warning=FALSE, message=FALSE, fig.align="center", fig.height=4, class.source="watch-out"}
-      
-      par(mfrow = c(2, 2))
-      
-      n <- 30
-      success <- seq(0, n)
-      prob <- c(0.2,0.4,0.6,0.8)
-      
-      for (i in seq(1, length(prob)) ) {
-        
-        set.seed(123)
-        
-        dens <- dbinom(success, size=n, prob= prob[i])
-        name <- paste0('Binomial Distribution (n=',n,', p=',prob[i],')') 
-        
-        plot(success, dens,
-             type='h',
-             main=name,
-             ylab='Probability',
-             xlab ='Successes',
-             lwd=3)
-      }
-```
-<span style="width:40px;display:inline-block"></span>
-The model that comes from this one is the [dose‐effect model](https://en.wikipedia.org/wiki/Dose%E2%80%93response_relationship) used in an experiment, and this idea comes from GLM as well. I will explain this model in the future-forward and link it here as it is ready. 
+ 
       
      
 
