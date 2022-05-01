@@ -1,0 +1,449 @@
+---
+title: "<center><div class='mytitle'>Probability</div></center>"
+output:
+  html_document:
+      highlight: arrow
+      css: style.css
+      toc: FALSE
+      math_method: 
+        engine: webtex
+        url: https://latex.codecogs.com/svg.image?
+      citation_package: biblatex
+      includes: 
+         in_header: Capa.html
+         after_body: Footer.html
+header-includes:
+  - \usepackage[fleqn]{amsmath}
+bibliography: yourBibFile.bib
+link-citations: true
+biblio-style: authoryear
+---
+
+```{r setup, include=FALSE}
+
+library(downlit)
+
+knitr::opts_chunk$set(tidy.opts=list( width.cutoff = 30 ), tidy=TRUE)
+
+##       highlight: breezedark
+##       highlight_downlit: TRUE
+
+```
+
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\P}{\mathrm{P}}
+
+<section class="section" >
+  <div class="content">
+
+Here, I want to discuss the main probability distribution (based on my humble knowledge). Probability is the area that I am so fascinated with because there are many applications in several science topics. The principal probability distributions necessary to understand the whole process regarding inference and applying statistical models are Bernoulli, Binomial, Negative-Binomial, Poisson, Normal, and Gamma. Of course, there are many other essential distributions that I am not to discourse here. I will try to explain the support and parameters beyond the idea behind each one.  
+
+# Bernoulli distribution
+
+The first one is the most famous distribution, is the Bernoulli distribution. Let $X$ a binary random variable with probability density function (PDF) $f_{x}$ . Then, $X \sim Ber(p)$ has PDF
+
+<div class="equation">
+  $$f(x) = \P(X = x) = p^{x} (1-p)^{1-x}$$
+  </div>
+  
+  where the support is $X \in \{0, 1\}$ and parametric space is $p \in (0, 1)$. The expected value (mathematical expectation) is $\E(X) = p$ and variance is $\var(X) = p(1 - p)$.
+<p></p>
+  I will not discuss moments in statistics here where the first moment is mathematical expectations and the second is related to variance. Nevertheless, [Wikipedia](https://en.wikipedia.org/wiki/Moment_(mathematics)) is a good site where you might start to study more about this topic. I love this concept because everything concerning statistical models is linked to a mean, mainly in generalized linear models ([MLG](https://en.wikipedia.org/wiki/Generalized_linear_model)). But it is a topic to see forward. 
+<p></p>
+  Bellow, there is a code about fifteen realizations from Bernoulli distribution. You can see that there is a chart, where the x-axis is $X = 1$ and $X = 0$, and  y-axis is $\P(X = 1)$ and $\P(X = 0)$, respectively. And other propriety that we need to have in mind is $\P(X = 1) + \P(X = 0) = 1$.
+
+<span style="width:40px;display:inline-block"></span>
+  
+  
+  ```{r warning=FALSE, message=FALSE, fig.align="center", fig.height=4, class.source="watch-out"}
+set.seed(123)
+value <- seq(0.000001, 0.999999, by = 0.001)
+p <- sample(value, size = 15, replace = TRUE)
+q <- 1 - p
+
+data0 <- cbind('X = 1' = p, 'X = 0' = q)
+
+barplot(data0, 
+        beside = TRUE,
+        main = "Bernoulli distribution",
+        xlab = "Realization of the variable",
+        ylab = "Probability",
+        col=rainbow(15))
+
+```
+<span style="width:40px;display:inline-block"></span>
+  
+  The Bernoulli distribution has a huge spotlight in many areas, mainly because of its applications. For whatever response variable you have whose response is good/bad or two options, the model logistic regression will be the model appropriated to study. 
+
+# Binomial distribution 
+
+The Binomial distribution is essential primarily due to its application in the experimental area of health, agronomy, or other sciences. Let $X$ a binary random variable with probability density function (PDF) $f_{x}$ . Then, $X \sim Bin(n, p)$ has PDF
+
+<div class="equation"> 
+  $$f(x) = \P(X = x) = \binom{n}{x} p^{x} (1-p)^{n-x}$$
+  </div>
+  
+  where the support is $X \in \{0, 1, \dots, n\}$ – number of successes and parametric space is $p \in (0, 1)$ success probability for each trial and $n \in \{0, 1, \dots\}$ - number of trials. The expected value is $\E(X) = np$ and variance is $\var(X) = np(1 - p)$.
+
+For this last one, $n$, I would prefer to treat it as fix value than a parameter.  It happens because you will have always been with this value previously. And the concept of the parameter is to estimate from the sample and not to have it before. It might have the same idea or be called a hyperparameter, such as machine learning techniques. 
+<p></p>
+  The graph below shows us how different $p$ could affect the density curve of Binomial distribution. 
+
+<span style="width:40px;display:inline-block"></span>
+  
+  ```{r warning=FALSE, message=FALSE, fig.align="center", fig.height=4, class.source="watch-out"}
+
+par(mfrow = c(2, 2))
+
+n <- 30
+success <- seq(0, n)
+prob <- c(0.2,0.4,0.6,0.8)
+
+for (i in seq(1, length(prob)) ) {
+  
+  set.seed(123)
+  
+  dens <- dbinom(success, size=n, prob= prob[i])
+  name <- paste0('Binomial Distribution (n=',n,', p=',prob[i],')') 
+  
+  plot(success, dens,
+       type='h',
+       main=name,
+       ylab='Probability',
+       xlab ='Successes',
+       lwd=3)
+}
+```
+<span style="width:40px;display:inline-block"></span>
+  
+  The model that comes from this one is the [dose‐effect model](https://en.wikipedia.org/wiki/Dose%E2%80%93response_relationship) used in an experiment, and this idea comes from GLM as well. I will explain this model in the future-forward and link it here as it is ready. 
+
+
+# Poisson distribution
+
+When you have to analyze data that the response variable is a positive discrete variable, the Poisson distribution is the best distribution to begin your study. Let $X$ a discrete random variable with probability density function (PDF) $f_{x}$ . Then, $X \sim Pois(\lambda)$ has PDF 
+
+<div class="equation">
+  $$f(x) = \P(X = x) = \frac{\lambda^{x} e^{-\lambda}}{x!}$$
+  </div>
+  
+  where the support is $X \in \{0, 1, 2, \dots\}$ – number of successes and parametric space is $\lambda \in (0, + \infty)$ rate. The expected value and variance is $\E(X) = \var(X) = \lambda$. Below is a code to generate data from Poisson distribution in the R program. 
+
+<span style="width:40px;display:inline-block"></span>
+  
+  ```{r warning=FALSE, message=FALSE, fig.align="center", fig.height=4, class.source="watch-out"}
+
+## Package
+library(vcd)
+
+## Poisson 
+set.seed(123)
+n <- 500
+lambda = 4
+x <- rpois(n=n, lambda = lambda)
+
+var(x)/mean(x)
+
+## Histogram to discrete data
+result.prop <- prop.table( table(x))
+round(result.prop, 6)*100
+
+max.ta <- max(table(x)) + 5
+
+bar <- barplot(table(x), xaxt = "n", ylim = c(0, max.ta), xlab = "x", ylab = "Frequency")
+axis(1, at = bar, labels = data.frame(table(x))$x, las = 3)
+
+## You might use 'type = standing'
+gf <- goodfit(x, "poisson", method = "ML")
+plot(gf, type = "hanging", scale = "sqrt", xlab = "Number of Occurrences", 
+     ylab = expression(sqrt("Frequency")))
+
+```
+<span style="width:40px;display:inline-block"></span>
+  
+  As you see, the mean and variance have the same parameter, and this property is so crucial in many applications in the real world. When $\var(X) < \E(X)$ is called **underdispersion**, it is not common in Poisson models; however, there are some techniques to deal with it. Otherwise, when $\var(X) > \E(X)$ is called **overdispersion**, it is more common in Poisson models. Usually, the problem arises because there is an excess of zero. Exist many approaches to solve it, such as Negative-Binomial regression (more usual), Zero-Inflated Poisson Regression, and others.  
+
+Now, I will assume that $\lambda \sim Gamma(\alpha, \beta)$. For the moment, I will say that the support of the Gamma distribution and the parametric space of the Poisson is the same. When I explain the Negativa-Binomial Distribution, this will be clearer to you. 
+
+<span style="width:40px;display:inline-block"></span>
+  
+  ```{r warning=FALSE, message=FALSE, fig.align="center", fig.height=4, class.source="watch-out"}
+
+set.seed(123)
+n <- 500
+k <- 10
+theta <- 0.409
+lambda = rgamma(n, shape = k, scale = theta)
+
+## it is so similar lambda = 4
+mean(lambda)
+
+x <- rpois(n=n, lambda = lambda)
+
+## overdispersion
+var(x)/mean(x)
+
+## Histogram to discret data
+result.prop <- prop.table( table(x))
+round(result.prop, 6)*100
+
+max.ta <- max(table(x)) + 5
+
+bar <- barplot(table(x), xaxt = "n", ylim = c(0, max.ta), xlab = "x", ylab = "Frequency")
+axis(1, at = bar, labels = data.frame(table(x))$x, las = 3)
+
+## Poisson
+## In case use 'type = standing'
+gf <- goodfit(x, "poisson", method = "ML")
+plot(gf, type = "hanging", scale = "sqrt", xlab = "Number of Occurrences", 
+     ylab = expression(sqrt("Frequency")))
+
+## Negativa-Binomial 
+gf <- goodfit(x, "nbinomial", method = "ML")
+plot(gf, type = "hanging", scale = "sqrt", xlab = "Number of Occurrences", 
+     ylab = expression(sqrt("Frequency")))
+
+```
+<span style="width:40px;display:inline-block"></span>
+  
+  ***What do you think about these results?*** So, it is similar to the results generated from the Poisson distribution with $\lambda = 4$. We should conclude that the Poisson distribution remains a good option instead of the Negative-Binomial distribution. 
+
+The $\lambda$ was generated to create an overdispersion in the code below. 
+
+<span style="width:40px;display:inline-block"></span>
+  
+  ```{r warning=FALSE, message=FALSE, fig.align="center", fig.height=4, class.source="watch-out"}
+
+set.seed(123)
+n <- 500
+k <- 1.07
+theta <- 4
+lambda = rgamma(n, shape = k, scale = theta)
+
+## it is so similar lambda = 4
+mean(lambda)
+
+x <- rpois(n=n, lambda = lambda)
+
+## overdispersion
+var(x)/mean(x)
+
+## Histogram to discret data
+result.prop <- prop.table( table(x))
+round(result.prop, 6)*100
+
+max.ta <- max(table(x)) + 5
+
+bar <- barplot(table(x), xaxt = "n", ylim = c(0, max.ta), xlab = "x", ylab = "Frequency")
+axis(1, at = bar, labels = data.frame(table(x))$x, las = 3)
+
+## In case use 'type = standing'
+## Poisson
+gf <- goodfit(x, "poisson", method = "ML")
+plot(gf, type = "hanging", scale = "sqrt", xlab = "Number of Occurrences", 
+     ylab = expression(sqrt("Frequency")))
+
+## Negativa-Binomial 
+gf <- goodfit(x, "nbinomial", method = "ML")
+plot(gf, type = "hanging", scale = "sqrt", xlab = "Number of Occurrences", 
+     ylab = expression(sqrt("Frequency")))
+
+```
+<span style="width:40px;display:inline-block"></span>
+  
+  What must be seen regarding the overdispersion is that numbers of zero are responsible for this problem; thus, this one is equivalent to **17.4%** of our database and is the number that repeats the most. 
+
+Another important property is the occurrence of the number of events in a specific interval of time, distance, area or volume, and it has a significant impact on studies. I am going to give two examples instead of a mathematical concept. The first one is you want to know if a particular highway improved in the accident numbers, in other words, if there has been a decrease in the number of accidents. Accident numbers are available at eight points on the highway before and after the improvements, during the number of years specified in each case. In this case, the number of years fixed is different for each sample observation, so you need to deal with an **offset**. The second example is you want to study the number of dengue cases in each city in a specific state, but you can not compare equal to equal because the population density is not the same. So, in this case, you have an **offset** again. 
+
+# Negative-Binomial distribution
+
+I do not need to argue so much about how this distribution is essential; the previous topic said it for itself. But I will follow the script of the presentation like the others. Let $X$ a discrete random variable with probability density function (PDF) $f_{x}$. Then, $X \sim BN(r, p)$ has PDF 
+
+<div class="equation">
+  $$f(x) = \P(X = x) = \binom{x + r - 1}{x} \binom{x + r - 1}{x} p^{x} (1-p)^{r}$$
+  </div>
+  
+  where the support is $X \in \{0, 1, 2, \dots\}$ – number of successes and parametric space is $r > 0$ - Numbers of failures until the experiment is stopped and $p \in (0, 1)$ - sucess probability in each experiment. The expected value is $\E(X) = r\frac{p}{1-p}$ and variance is $\var(X) = r\frac{p}{(1-p)^2}.$
+  
+  With the Negative-Binomial distribution formally introduced, I would like to demonstrate the relation between the Poisson distribution and the Gamma Distribution with the Negative-Binomial distribution. However, it could be necessary to remember the concept of marginal probability. So, 
+
+<div class="equation">
+  $$f_{X}(x) = \int_{y} \P_{_{XY}}(x,y)dy = \int_{y}\P_{_{X/Y}}(x/y)\P_{_{Y}}(y)dy.$$
+  </div>
+  
+  Now I will assume the following Supposition, 
+
+<div class="equation">
+  $$X \sim Pois(\lambda) \\[1em]
+\lambda \sim Gamma(\text{Shape} = r, \text{rate} = 1/\text{Scale} = \beta)$$
+  </div>
+  
+  Therefore we can write the marginal from the results shown above. Then,
+
+<div class="equation">
+  $$\begin{aligned}
+f_{X}(x) &= \int_{0}^{\infty} \frac{\lambda^{x} e^{-\lambda}}{x!} \frac{\beta^{r}}{\Gamma(r)}\lambda^{r-1}e^{-\beta\lambda} d\lambda \\[15pt] 
+&= \frac{1}{x!}\frac{\beta^{r}}{\Gamma{(r)}}\int_{0}^{\infty} \lambda^{x + r-1}e^{-( 1 + \beta)\lambda} d\lambda \\[15pt] 
+&= \frac{1}{x!}\frac{\beta^{r}}{\Gamma{(r)}}\int_{0}^{\infty}\frac{(1 + \beta)^{r + x}}{\Gamma(r + x)}\frac{\Gamma(r + x)}{(1 + \beta)^{r + x}}\lambda^{x + r-1}e^{-( 1 + \beta)\lambda} d\lambda \\[15pt]
+&= \frac{1}{x!}\frac{\beta^{r}}{\Gamma{(r)}}\frac{\Gamma(r + x)}{(1 + \beta)^{r + x}} \\[15pt] 
+& = \frac{\Gamma(r + x)}{\Gamma(x + 1)\Gamma(r)}\frac{\beta^{r}}{(1 + \beta)^{r + x}} \\[15pt] 
+& = \binom{x + r - 1}{x}  \bigg(\frac{\beta}{1 + \beta}\bigg)^{r} \bigg(\frac{1}{1 + \beta}\bigg)^{x} \\[15pt] 
+f_{X}(x) & = \binom{x + r - 1}{x}  \bigg(\frac{1}{1 + \beta}\bigg)^{x} \bigg(1 - \frac{1}{1 + \beta}\bigg)^{r}\\[15pt] \end{aligned}$$
+  </div>
+  
+  So, it is not difficult to realize since that $\beta > 0$, we can assume that $p = \frac{1}{1 + \beta}$ and parametric space still is $p \in (0, 1)$ . 
+
+Another point that I would like to approach is related to the re-parameterization of the Negative-Binomial distribution in terms of its mean—and understanding this point is essential, mainly in statistical models. In many distributions as the Negative-Binomial distribution, the mean is linked with more than one parameter. Although, in most cases, when there is more than one, we will be interested in the mean related to one parameter. So, 
+
+<div class="equation">
+  $$\begin{aligned}
+\E(X) = r\frac{p}{1 - p} = \mu \\[10pt]
+\frac{\mu}{r} =  \frac{p}{1 - p} \\[10pt]
+p = \frac{\mu}{r + \mu} \\ \\[10pt]
+\end{aligned}$$
+  </div>
+  
+  And the variance is
+
+<div class="equation">
+  $$\begin{aligned}
+\var(X) &= r\frac{p}{1 - p}\frac{1}{1 - p} \\[10pt]
+&=  r\frac{\mu}{r}\frac{1}{1 - \frac{\mu}{r + \mu} } \\[10pt]
+&= \mu + \frac{\mu^{2}}{r} \\[10pt]
+\end{aligned}$$
+  </div>
+  
+  Therefore the Negative-Binomial distribution re-parameterized in terms of the mean is
+
+<div class="equation">
+  $$ f(x) = \P(X = x) = \binom{x + r - 1}{x}\bigg(\frac{\mu}{r + \mu}\bigg)^{x} \bigg(\frac{r}{r + \mu}\bigg)^{r} $$
+  </div>
+  
+  where the support is $X \in \{0, 1, 2, \dots\}$ and parametric space is $r > 0$ and $\mu > 0$. The expected value is $\E(X) = \mu$ and the variance is $\var(X) = \mu + \frac{\mu^2}{r}$. So the parameter $r$ controls the overdispersion with a scalar of the squared mean. 
+
+# Normal distribution
+
+The Normal Distribution is one of the most important in statistics. The name of the Norma Distribution is quite intuitive because everything in this world tends to be normal. For example, imagine the height of people; usually, there are so tall people and, at the same time, exist short people, but the majority stay on average. And it is so fascinating. In my opinion, the world always converges to normality. Let $X$ a continuous random variable with probability density function (PDF) $f_{x}$ . Then, $X \sim N(\mu, \sigma^{2})$ has PDF
+
+<div class="equation">
+  $$ f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{\sigma^{2}}(x - \mu)^{2}} $$
+  </div>
+  
+  where the support is $X \in  \mathbb{R}$ and parametric space is $\mu \in \mathbb{R}$ - location parameter, and $\sigma \in \mathbb{R}^{+}$ - scale parameter. The expected value is $\E(X) = \mu$ and the variance is $\var(X) = \sigma^{2}$.
+
+Some properties you must have in mind are
+
+<div class="lista">
+  <ol type="1">
+  <li> The curve of Normal Distribution is unimodal around its $\mu$. </li>
+  <li> $x = \mu$ is the maximum point to $f(x)$. </li>
+  <li> Beyond $\mu$ to be the mean, it is at the same time median and mode. </li>
+  <li> $\mu - \sigma$ and $\mu + \sigma$ are inflection points of $f(x)$. </li>
+  <li> The density of Normal Distribution is log-concave. </li>
+  </ol> 
+  </div>
+  
+  Below, you can see the R code to the density plot from Normal Distribution with different values.
+
+<span style="width:40px;display:inline-block"></span>
+  
+  ```{r warning=FALSE, message=FALSE, fig.align="center", fig.height=4, class.source="watch-out"}
+
+par(mfrow = c(2, 2))
+
+n <- 1000
+mean0 <- c(-10, 5,-10, 5)
+sd0 <- c(2,2,5,5)
+
+for (i in seq(1, length(mean0)) ) {
+  
+  set.seed(123)
+  mu <- mean0[i]
+  sigma <- sd0[i]
+  x <- sort(rnorm(n = n, mean = mu, sd = sigma))
+  dens <- dnorm(x = x, mean = mu, sd = sigma)
+  name <- paste0('X ~ N(',mu,', ',sigma,')') 
+  
+  inpointsN <- mu - sigma
+  inpointsP <- mu + sigma
+  
+  plot(x, dens,
+       type='l',
+       main=name,
+       ylab='Density',
+       xlab ='X',
+       ylim = c(0,0.2),
+       lwd=3)
+  
+  abline(v=c(inpointsN, inpointsP), col = 'red', lty = 2)
+  abline(v=mu, col = 'blue', lty = 2)
+}
+
+```
+<span style="width:40px;display:inline-block"></span>
+  
+  The most important and well-known model that comes from Normal Distribution is Linear Regression. 
+
+
+# Gamma distribution
+
+The Gamma Distribution is suitable when its variable is continuous, non-negative, and positive-skewed data and is used to model waiting times, such as insurance claims, survival data, or econometrics data. Let $X$ a continuous random variable with probability density function (PDF) $f_{x}$. Then, $X \sim Gamma(r, \beta)$ has PDF  
+
+<div class="equation">
+  $$f(x) = \frac{\beta^{r}}{\Gamma(r)}x^{r-1}e^{-\beta x}$$
+  </div>
+  
+  where the support is $X \in \mathbb{R}_{\small\setminus\{0\}}^{+}$ and parametric space is $(r, \beta) \in \mathbb{R}_{\small\setminus\{0\}}^{+}$. The expected value is $\E(X) = \frac{r}{\beta}$ and variance is $\var(X) = \frac{r}{\beta^2}.$
+  
+  I want to come back approach related to the re-parameterization as it was done to the Negative-Binomial distribution in terms of its mean. I am going to broach this topic by virtue of its importance to statistical models. Then,  
+
+<div class="equation">
+  $$\begin{aligned}
+\E(X) &= \frac{r}{\beta} = \mu \\[10pt]
+\beta &=  \frac{r}{\mu} \\[10pt]
+\end{aligned}$$
+  </div>
+  
+  And the variance is
+
+<div class="equation">
+  $$\begin{aligned}
+\var(X) &= \frac{r}{\beta^2} = \frac{r}{\big(\frac{r}{\mu}\big)^2} \\[10pt]
+&= \frac{\mu^{2}}{r} \\[10pt]
+\end{aligned}$$
+  </div>
+  
+  The new form of Gamma distribution can be presented as:
+  
+  <div class="equation">
+  $$ f(x) = \frac{\big(\frac{r}{\mu}\big)^{r}}{\Gamma(r)}x^{r-1}e^{-\frac{r}{\mu} x} $$
+  </div>
+  
+  where the support is $X \in \mathbb{R}_{\small\setminus\{0\}}^{+}$ and parametric space is $(r, \mu) \in \mathbb{R}_{\small\setminus\{0\}}^{+}$. The expected value is $\E(X) = \mu$ and variance is $\var(X) = \frac{\mu^{2}}{r}.$
+  
+  An important point to highlight is that the coefficient of variation in gamma distribution is given as
+
+<div class="equation">
+  $$ \begin{aligned}
+\text{CV} = \frac{\sqrt{\var(X)}}{\E(X)} = \frac{\sqrt{\frac{\mu^{2}}{r}}}{\mu} = \frac{1}{\sqrt{r}} = \phi^{2}\\[10pt]
+\end{aligned}$$
+  </div>
+  
+  Where coefficient of variation (CV) is a constant and $\phi = \frac{1}{r}$ is the dispersion parameter. This means that as the expected value increase, so the variance of random variable increases in proportion to $\frac{\var(X)}{\E(X)} = \frac{\mu}{r}$.
+
+# REFERENCES
+
+<div id="refs">
+---
+nocite: '@*'
+---
+</div>
+
+</div>
+</section>
+
+
+
+
+
